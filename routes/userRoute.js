@@ -1,7 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const kuesionerController = require('../controllers/kuesionerController');
 const authMiddleware = require('../middlewares/authMiddleware');
+const multer = require('multer');
+const multerStorage = multer.memoryStorage();
+
+const upload = multer({
+    storage: multerStorage,
+  });
+
+
 
 // create user
 router.post('/register', userController.createUser);
@@ -23,6 +32,14 @@ router.delete('/delete', authMiddleware, userController.deleteUser);
 // Logout user
 router.post('/logout', authMiddleware, userController.logout);
 
+
+//still broken
+router.put('/profile/picture', authMiddleware, upload.single('profilePicture'), userController.updateProfilePicture);
+
+
+router.get('/profile/history', authMiddleware, userController.showKuesionerHistory);
+
+router.get('/kuesioner/:kuesionerId/answers', authMiddleware, kuesionerController.showUserAnswers);
 
 
 module.exports = router;
