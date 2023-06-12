@@ -2,12 +2,21 @@ const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
+const multer = require('multer');
+const { Storage } = require('@google-cloud/storage');
+const storage = new Storage({
+  projectId: 'bangkit-capstone-c23-pc667',
+});
+const bucketName = 'bangkit-capstone-c23-pc667-user-profilepicture';
+const bucket = storage.bucket(bucketName);
 
+const Kuesioner = require('../models/kuesionerModel');
+const Answer = require('../models/answerModel');
 
 exports.createUser = async (req, res) => {
   const jwtSecret = process.env.JWT_SECRET;
 
-  const { nama, umur, pekerjaan,phone, email, password, confirm_password } = req.body;
+  const { nama, umur, gender,phone, email, password, confirm_password } = req.body;
     
   // Check if the email already exists
     const existingUser = await User.findOne({ where: { email } });
@@ -34,7 +43,7 @@ exports.createUser = async (req, res) => {
     const user = await User.create({
       nama,
       umur,
-      pekerjaan,
+      gender,
       phone,
       email,
       password: hashedPassword, // Store the hashed password
@@ -48,7 +57,7 @@ exports.createUser = async (req, res) => {
       phone: user.phone
     }
     // Generate a JWT token
-    const token = jwt.sign({ userId: user.id }, jwtSecret, {
+    const token = jwt.sign({ userId: user.user_id }, jwtSecret, {
       expiresIn: '1h', // Token expiration time
     });
     res.status(201).send({
@@ -111,7 +120,7 @@ exports.login = async (req, res) => {
     //   phone: user.phone
     // }
     // Generate JWT token
-    const token = jwt.sign({ userId: user.id }, jwtSecret, {
+    const token = jwt.sign({ userId: user.user_id }, jwtSecret, {
       expiresIn: '1h', // Token expiration time
     });
     res.status(200).send({
@@ -132,7 +141,7 @@ exports.getProfile = async (req, res) => {
 
     // Retrieve the user profile from the database based on the user ID
     const user = await User.findByPk(userId, {
-      attributes: { exclude: ['password'] }, // Exclude the password field from the response
+      attributes: { exclude: ['password', 'confirm_password'] }, // Exclude the password field from the response
     });
 
     if (!user) {
@@ -211,3 +220,85 @@ exports.logout = (req, res) => {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
+
+//still broken
+exports.updateProfilePicture = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    const fileBuffer = req.file.buffer;
+    const fileName = `${Date.now()}-${req.file.originalname}`;
+
+    const file = bucket.file(fileName);
+
+    const stream = file.createWriteStream({
+      metadata: {
+        contentType: req.file.mimetype,
+      },
+    });
+
+    stream.on('error', (error) => {
+      console.error('Error uploading file to Cloud Storage:', error);
+      res.status(500).json({ message: 'Failed to upload profile picture' });
+    });
+
+    stream.on('finish', () => {
+      User.update({ image: fileName }, { where: { id: userId } })
+        .then(() => {
+          res.json({ message: 'Profile picture updated successfully' });
+        })
+        .catch((error) => {
+          console.error('Error updating profile picture in database:', error);
+          res.status(500).json({ message: 'Failed to update profile picture' });
+        });
+    });
+
+    stream.end(fileBuffer);
+  } catch (error) {
+    console.error('Error updating profile picture:', error);
+    res.status(500).json({ message: 'Failed to update profile picture' });
+  }
+};
+
+exports.showKuesionerHistory = async (req, res) => {
+  const userId = req.user.userId; // Mengakses informasi user yang sedang login
+
+  try {
+    // Cari user berdasarkan user ID
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Cari semua jawaban kuesioner yang telah dijawab oleh user
+    const answers = await Answer.findAll({
+      where: { user_id: userId },
+      include: [
+        {
+          model: Kuesioner,
+          attributes: ['kuesioner_id', 'judul'],
+        },
+      ],
+    });
+
+    // Membuat objek response yang berisi history kuesioner
+    const kuesionerHistory = answers.map(answer => {
+      return {
+        kuesionerId: answer.Kuesioner.kuesioner_id,
+        kuesionerTitle: answer.Kuesioner.judul,
+        answer: answer.answer,
+        createdAt: answer.createdAt,
+      };
+    });
+
+    res.json(kuesionerHistory);
+  } catch (error) {
+    console.error('Error fetching kuesioner history:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
