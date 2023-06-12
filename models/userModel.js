@@ -2,15 +2,21 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
 const User = sequelize.define('User', {
+  user_id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
   nama: {
     type: DataTypes.STRING,
     allowNull: false,
   },
   umur: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
+    defaultValue: 0,
   },
-  pekerjaan: {
+  gender: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -38,8 +44,35 @@ const User = sequelize.define('User', {
   },
   image: {
     type: DataTypes.STRING,
+    allowNull: true,
     defaultValue: 'https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png',
+  },
+  pekerjaan: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: '-',
+  },  
+  asal: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: '-',
+  },  
+  hobi: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: '-',
+  },
+  pendidikan: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: '-',
   },
 });
 
+User.associate = (models) => {
+  User.hasMany(models.Kuesioner, {
+    foreignKey: 'user_id',
+    onDelete: 'CASCADE',
+  });
+};
 module.exports = User;
