@@ -3,7 +3,8 @@ require('dotenv').config(); // Load environment variables
 const express = require('express');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/userRoute');
-
+const kategoriRoute = require('./routes/kategoriRoute');
+const kuesionerRoute = require('./routes/kuesionerRoute');
 
 
 const app = express();
@@ -11,6 +12,8 @@ const port = process.env.APP_PORT || 3000; // Use the PORT variable from .env or
 
 app.use(bodyParser.json());
 app.use('/users', userRoutes);
+app.use('/kategoris', kategoriRoute);
+app.use('/kuesioners', kuesionerRoute);
 
 
 app.use('/', (req, res) => {
