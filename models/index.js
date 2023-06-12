@@ -40,6 +40,8 @@ Object.keys(db).forEach(modelName => {
 //define route
 
 const user = require("./userModel")(sequelize, Sequelize)
+const kategori = require("./kategoriModel")(sequelize, Sequelize)
+const kuesioner = require("./kuesionerModel")(sequelize, Sequelize)
 
 //define relationship
 
@@ -51,5 +53,7 @@ module.exports = {
   db,
 
   //define model
-  user
+  user,
+  kategori,
+  kuesioner
 }
