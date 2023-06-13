@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const sequelize = require('./database');
 
 const KuesionerKategori = sequelize.define('KuesionerKategori', {
   kuesionerkategori_id: {
