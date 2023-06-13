@@ -147,8 +147,13 @@ exports.getProfile = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
-    res.json({ user });
+    const response = {
+      status: "success",
+      message: "login berhasil menampilkan data profile user",
+      data: user
+      
+    }
+    res.json(response);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
@@ -294,8 +299,13 @@ exports.showKuesionerHistory = async (req, res) => {
         createdAt: answer.createdAt,
       };
     });
-
-    res.json(kuesionerHistory);
+    const response = {
+      status: "success",
+      message: "berhasil menampilkan history",
+      data: kuesionerHistory
+      
+    }
+    res.json(response);
   } catch (error) {
     console.error('Error fetching kuesioner history:', error);
     res.status(500).json({ error: 'Internal server error' });

@@ -451,12 +451,10 @@ exports.showUserAnswers = async (req, res) => {
     const response = {
         status: 'success',
         message: 'Berhasil mendapatkan detail jawaban kuesioner',
-        data: {
-            formattedAnswers
-        },
+        data: formattedAnswers
     };
 
-    res.json(formattedAnswers);
+    res.json(response);
     } catch (error) {
         console.error('Error retrieving user answers:', error);
         res.status(500).json({ error: 'Internal server error' });
