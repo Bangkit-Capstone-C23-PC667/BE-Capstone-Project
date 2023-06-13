@@ -8,7 +8,7 @@ const kuesionerRoute = require('./routes/kuesionerRoute');
 
 
 const app = express();
-const port = process.env.APP_PORT || 3000; // Use the PORT variable from .env or default to 3000
+const port = process.env.PORT || 3000; // Use the PORT variable from .env or default to 3000
 
 app.use(bodyParser.json());
 app.use('/users', userRoutes);
