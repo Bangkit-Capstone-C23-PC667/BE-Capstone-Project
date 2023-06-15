@@ -20,14 +20,7 @@ const Kuesioner = sequelize.define('Kuesioner', {
     allowNull: false,
   },
   rentang_usia: {
-    type: DataTypes.ENUM(
-      'remaja_awal',
-      'remaja_akhir',
-      'dewasa_awal',
-      'dewasa_akhir',
-      'lansia_awal',
-      'umum'
-    ),
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   kategori_id: {
