@@ -5,9 +5,22 @@ const KuesionerKategori = require('../models/kuesionerkategoriModel');
 const cheerio = require('cheerio');
 const axios = require('axios');
 const User = require('../models/userModel');
+const { v4: uuidv4 } = require('uuid');
 
 const Question = require('../models/questionModel');
 const QuestionOption = require('../models/questionOptionModel');
+const fs = require('fs');
+const { Storage } = require('@google-cloud/storage'); 
+const storage = new Storage({
+    projectId: process.env.GOOGLE_PROJECT_ID,
+    credentials: {
+        client_email: process.env.GOOGLE_SERVICE_ACCOUNT_CLIENT_EMAIL,
+        private_key: process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY.replace(/\\n/g, '\n'),
+    },
+});
+// Import the Google Cloud Storage library
+
+const bucket_Name = 'bangkit-capstone-c23-pc667-user-bucket'; // Replace with your bucket name
 
 
 // Get all kuesioners
@@ -52,8 +65,14 @@ exports.getKuesionerById = async (req, res) => {
 // Create a new kuesioner
 exports.createKuesioner = async (req, res) => {
     try {
-        const { judul, deskripsi, rentang_usia, kategori_id, link, image } = req.body;
+        const { judul, deskripsi, rentang_usia, kategori_id, link } = req.body;
         const user = req.user.userId; // Get the user_id from the authenticated user
+        const image = req.file; // Get the uploaded image file
+        if (!image) {
+            return res.status(400).json({ message: 'No image file provided' });
+        }
+        const imageUrl = await uploadImage(image);
+
         // Create the Kuesioner
         const kuesioner = await Kuesioner.create({
             judul,
@@ -62,18 +81,18 @@ exports.createKuesioner = async (req, res) => {
             kategori_id,
             user_id: user,
             link,
-            image,
+            image: imageUrl, // Set the image URL to the uploaded image
         });
         const kategori_ids = kategori_id
     // Update the KuesionerKategori table with the kategori IDs
-    if (kategori_ids && kategori_ids.length > 0) {
-        const kuesionerKategoriValues = kategori_ids.map(kategori_id => ({
+    if (kategori_id) {
+        const kategori_ids = Array.isArray(kategori_id) ? kategori_id : [kategori_id];
+        const kuesionerKategoriValues = kategori_ids.map((kategori_id) => ({
             kuesioner_id: kuesioner.kuesioner_id,
-            kategori_id
+            kategori_id,
         }));
         await KuesionerKategori.bulkCreate(kuesionerKategoriValues);
     }
-
     // Mengambil halaman HTML Google Form
     const responsehtml = await axios.get(link);
     const html = responsehtml.data;
@@ -125,6 +144,7 @@ exports.createKuesioner = async (req, res) => {
     });
     
     }
+
     const response = {
         status: "success",
         message: "berhasil membuat kuesioners",
@@ -458,5 +478,27 @@ exports.showUserAnswers = async (req, res) => {
     } catch (error) {
         console.error('Error retrieving user answers:', error);
         res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+// Function to upload an image to Cloud Storage
+const uploadImage = async (file) => {
+    try {
+        const bucketName = bucket_Name
+        const folderName = 'images'; // Specify the folder name
+        const fileName = `${folderName}/${uuidv4()}-${file.originalname}`; // Include the folder name in the file path
+        // Create a write stream to the desired file destination
+        const fileStream = storage.bucket(bucketName).file(fileName).createWriteStream({
+            resumable: false,
+            gzip: true,
+        });
+    
+        // Pipe the file data into the write stream
+        fileStream.end(file.buffer);
+    
+        // Return the uploaded file's public URL
+        return `https://storage.googleapis.com/${bucketName}/${fileName}`;
+        } catch (error) {
+        throw error;
     }
 };
