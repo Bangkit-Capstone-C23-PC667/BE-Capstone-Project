@@ -267,6 +267,8 @@ exports.logout = (req, res) => {
 exports.updateProfilePicture = async (req, res) => {
   try {
     const userId = req.user.userId;
+    const folderName = 'user/profile-picture';
+
 
     if (!req.file) {
       return res.status(400).json({ message: 'No file uploaded' });
@@ -274,8 +276,10 @@ exports.updateProfilePicture = async (req, res) => {
 
     const fileBuffer = req.file.buffer;
     const fileName = `${Date.now()}-${req.file.originalname}`;
+    const filePath = `${folderName}/${fileName}`;
 
-    const file = storage.bucket(bucketName).file(fileName);
+
+    const file = storage.bucket(bucketName).file(filePath);
 
     const stream = file.createWriteStream({
       metadata: {
