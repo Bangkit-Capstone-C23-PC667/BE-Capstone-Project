@@ -8,7 +8,6 @@
     "start": "nodemon index.js",
     "migrate": "sequelize db:migrate",
     "seed": "sequelize db:migrate"
-
   },
   "repository": {
     "type": "git",
@@ -22,7 +21,7 @@
   },
   "homepage": "https://github.com/Bangkit-Capstone-C23-PC667/BE-Capstone-Project#readme",
   "dependencies": {
-    "@google-cloud/storage": "^6.10.1",
+    "@google-cloud/storage": "^6.11.0",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
