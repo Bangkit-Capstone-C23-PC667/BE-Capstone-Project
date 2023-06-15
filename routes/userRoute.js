@@ -4,11 +4,7 @@ const userController = require('../controllers/userController');
 const kuesionerController = require('../controllers/kuesionerController');
 const authMiddleware = require('../middlewares/authMiddleware');
 const multer = require('multer');
-const multerStorage = multer.memoryStorage();
-
-const upload = multer({
-    storage: multerStorage,
-  });
+const upload = multer({ storage: multer.memoryStorage() });
 
 
 
@@ -34,7 +30,7 @@ router.post('/logout', authMiddleware, userController.logout);
 
 
 //still broken
-router.put('/profile/picture', authMiddleware, upload.single('profilePicture'), userController.updateProfilePicture);
+router.post('/profile/picture', authMiddleware, upload.single('profilePicture'), userController.updateProfilePicture);
 
 
 router.get('/profile/history', authMiddleware, userController.showKuesionerHistory);
