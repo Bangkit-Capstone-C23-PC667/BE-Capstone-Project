@@ -5,9 +5,13 @@ require('dotenv').config();
 const multer = require('multer');
 const { Storage } = require('@google-cloud/storage');
 const storage = new Storage({
-  projectId: 'bangkit-capstone-c23-pc667',
+  projectId: process.env.GOOGLE_PROJECT_ID,
+  credentials: {
+      client_email: process.env.GOOGLE_SERVICE_ACCOUNT_CLIENT_EMAIL,
+      private_key: process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY.replace(/\\n/g, '\n'),
+  },
 });
-const bucketName = 'bangkit-capstone-c23-pc667-user-profilepicture';
+const bucketName = 'bangkit-capstone-c23-pc667-user-bucket';
 const bucket = storage.bucket(bucketName);
 
 const Kuesioner = require('../models/kuesionerModel');
@@ -99,8 +103,7 @@ exports.login = async (req, res) => {
     const { email, password } = req.body;
 
     // Find the user by email
-    const user = await User.findOne({ where: { email } });
-
+    const user = await User.findOne({ where: { email:email } });
     // If the user is not found
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -111,14 +114,6 @@ exports.login = async (req, res) => {
     if (!passwordMatch) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
-
-    // const payload = {
-    //   id: user.id,
-    //   name: user.nama,
-    //   image: user.image,
-    //   email: user.email,
-    //   phone: user.phone
-    // }
     // Generate JWT token
     const token = jwt.sign({ userId: user.user_id }, jwtSecret, {
       expiresIn: '1h', // Token expiration time
@@ -227,6 +222,48 @@ exports.logout = (req, res) => {
 };
 
 //still broken
+// exports.updateProfilePicture = async (req, res) => {
+//   try {
+//     const userId = req.user.userId;
+
+//     if (!req.file) {
+//       return res.status(400).json({ message: 'No file uploaded' });
+//     }
+
+//     const fileBuffer = req.file.buffer;
+//     const fileName = `${Date.now()}-${req.file.originalname}`;
+
+//     const file = bucket.file(fileName);
+
+//     const stream = file.createWriteStream({
+//       metadata: {
+//         contentType: req.file.mimetype,
+//       },
+//     });
+
+//     stream.on('error', (error) => {
+//       console.error('Error uploading file to Cloud Storage:', error);
+//       res.status(500).json({ message: 'Failed to upload profile picture' });
+//     });
+
+//     stream.on('finish', () => {
+//       User.update({ image: fileName }, { where: { id: userId } })
+//         .then(() => {
+//           res.json({ message: 'Profile picture updated successfully' });
+//         })
+//         .catch((error) => {
+//           console.error('Error updating profile picture in database:', error);
+//           res.status(500).json({ message: 'Failed to update profile picture' });
+//         });
+//     });
+
+//     stream.end(fileBuffer);
+//   } catch (error) {
+//     console.error('Error updating profile picture:', error);
+//     res.status(500).json({ message: 'Failed to update profile picture' });
+//   }
+// };
+
 exports.updateProfilePicture = async (req, res) => {
   try {
     const userId = req.user.userId;
@@ -238,7 +275,7 @@ exports.updateProfilePicture = async (req, res) => {
     const fileBuffer = req.file.buffer;
     const fileName = `${Date.now()}-${req.file.originalname}`;
 
-    const file = bucket.file(fileName);
+    const file = storage.bucket(bucketName).file(fileName);
 
     const stream = file.createWriteStream({
       metadata: {
@@ -252,7 +289,7 @@ exports.updateProfilePicture = async (req, res) => {
     });
 
     stream.on('finish', () => {
-      User.update({ image: fileName }, { where: { id: userId } })
+      User.update({ image: fileName }, { where: { user_id: userId } })
         .then(() => {
           res.json({ message: 'Profile picture updated successfully' });
         })
@@ -268,6 +305,7 @@ exports.updateProfilePicture = async (req, res) => {
     res.status(500).json({ message: 'Failed to update profile picture' });
   }
 };
+
 
 exports.showKuesionerHistory = async (req, res) => {
   const userId = req.user.userId; // Mengakses informasi user yang sedang login
