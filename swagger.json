@@ -1,0 +1,678 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Backend-capstone",
+      "contact": {},
+      "version": "1.2"
+    },
+    "servers": [
+      {
+        "url": "https://virtserver.swaggerhub.com/Fayed06/quisiin/1.2",
+        "description": "SwaggerHub API Auto Mocking",
+        "variables": {}
+      },
+      {
+        "url": "https://be-capstone-project-aethyk4pbq-et.a.run.app",
+        "variables": {}
+      }
+    ],
+    "paths": {
+      "/users/profile": {
+        "get": {
+          "tags": [
+            "Protected"
+          ],
+          "summary": "getuserprofile",
+          "description": "get user profile",
+          "operationId": "getuserprofile",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "",
+              "headers": {},
+              "content": {}
+            }
+          },
+          "deprecated": false,
+          "security": [
+            {
+              "bearer": []
+            }
+          ]
+        }
+      },
+      "/users/profile/history": {
+        "get": {
+          "tags": [
+            "Protected"
+          ],
+          "summary": "getuserkuesionerhistory",
+          "description": "get user kuesioner history",
+          "operationId": "getuserkuesionerhistory",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "",
+              "headers": {},
+              "content": {}
+            }
+          },
+          "deprecated": false,
+          "security": [
+            {
+              "bearer": []
+            }
+          ]
+        }
+      },
+      "/users/kuesioner/13/answers": {
+        "get": {
+          "tags": [
+            "Protected"
+          ],
+          "summary": "getuserkuesionerhistoryCopy",
+          "description": "get user kuesioner history Copy",
+          "operationId": "getuserkuesionerhistoryCopy",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "",
+              "headers": {},
+              "content": {}
+            }
+          },
+          "deprecated": false,
+          "security": [
+            {
+              "bearer": []
+            }
+          ]
+        }
+      },
+      "/users/delete": {
+        "delete": {
+          "tags": [
+            "Protected"
+          ],
+          "summary": "deleteuser",
+          "description": "delete user",
+          "operationId": "deleteuser",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "",
+              "headers": {},
+              "content": {}
+            }
+          },
+          "deprecated": false,
+          "security": [
+            {
+              "bearer": []
+            }
+          ]
+        }
+      },
+      "/users/update": {
+        "put": {
+          "tags": [
+            "Protected"
+          ],
+          "summary": "updateuserprofile",
+          "description": "update user profile",
+          "operationId": "updateuserprofile",
+          "parameters": [],
+          "requestBody": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/updateuserprofilerequest"
+                    },
+                    {
+                      "example": {
+                        "nama": "a Doe",
+                        "umur": 30,
+                        "pekerjaan": "Software Engineer"
+                      }
+                    }
+                  ]
+                },
+                "example": {
+                  "nama": "a Doe",
+                  "umur": 30,
+                  "pekerjaan": "Software Engineer"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "",
+              "headers": {},
+              "content": {}
+            }
+          },
+          "deprecated": false,
+          "security": [
+            {
+              "bearer": []
+            }
+          ]
+        }
+      },
+      "/users/profile/picture": {
+        "post": {
+          "tags": [
+            "Protected"
+          ],
+          "summary": "updateuserprofilepicture",
+          "description": "update user profile picture",
+          "operationId": "updateuserprofilepicture",
+          "parameters": [],
+          "requestBody": {
+            "content": {
+              "multipart/form-data": {
+                "encoding": {},
+                "schema": {
+                  "required": [
+                    "profilePicture"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "profilePicture": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "",
+              "headers": {},
+              "content": {}
+            }
+          },
+          "deprecated": false,
+          "security": [
+            {
+              "bearer": []
+            }
+          ]
+        }
+      },
+      "/users/logout": {
+        "post": {
+          "tags": [
+            "Protected"
+          ],
+          "summary": "logout",
+          "description": "logout",
+          "operationId": "logout",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "",
+              "headers": {},
+              "content": {}
+            }
+          },
+          "deprecated": false,
+          "security": [
+            {
+              "bearer": []
+            }
+          ]
+        }
+      },
+      "/users/register": {
+        "post": {
+          "tags": [
+            "Auth"
+          ],
+          "summary": "registeraccount",
+          "description": "register account",
+          "operationId": "registeraccount",
+          "parameters": [],
+          "requestBody": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/registeraccountrequest"
+                    },
+                    {
+                      "example": {
+                        "nama": "John Doe",
+                        "umur": 25,
+                        "gender": "laki-laki",
+                        "phone": "23454421",
+                        "email": "jni2@example.com",
+                        "password": "password123",
+                        "confirm_password": "password123"
+                      }
+                    }
+                  ]
+                },
+                "example": {
+                  "nama": "John Doe",
+                  "umur": 25,
+                  "gender": "laki-laki",
+                  "phone": "23454421",
+                  "email": "jni2@example.com",
+                  "password": "password123",
+                  "confirm_password": "password123"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "",
+              "headers": {},
+              "content": {}
+            }
+          },
+          "deprecated": false
+        }
+      },
+      "/users/login": {
+        "post": {
+          "tags": [
+            "Auth"
+          ],
+          "summary": "loginuser",
+          "description": "login user",
+          "operationId": "loginuser",
+          "parameters": [],
+          "requestBody": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/loginuserrequest"
+                    },
+                    {
+                      "example": {
+                        "email": "jni2@example.com",
+                        "password": "password123"
+                      }
+                    }
+                  ]
+                },
+                "example": {
+                  "email": "jni2@example.com",
+                  "password": "password123"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "",
+              "headers": {},
+              "content": {}
+            }
+          },
+          "deprecated": false
+        }
+      },
+      "/kategoris/1": {
+        "get": {
+          "tags": [
+            "Kategori"
+          ],
+          "summary": "getspecifickategori",
+          "description": "get specific kategori",
+          "operationId": "getspecifickategori",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "",
+              "headers": {},
+              "content": {}
+            }
+          },
+          "deprecated": false
+        }
+      },
+      "/kuesioners": {
+        "post": {
+          "tags": [
+            "Kuesioners"
+          ],
+          "summary": "createnewkuesioners",
+          "description": "create new kuesioners",
+          "operationId": "createnewkuesioners",
+          "parameters": [],
+          "requestBody": {
+            "content": {
+              "multipart/form-data": {
+                "encoding": {},
+                "schema": {
+                  "required": [
+                    "judul",
+                    "deskripsi",
+                    "rentang_usia",
+                    "kategori_id[0]",
+                    "link",
+                    "image",
+                    "kategori_id[1]"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "judul": {
+                      "type": "string",
+                      "example": "test"
+                    },
+                    "deskripsi": {
+                      "type": "string",
+                      "example": "lorem ipsum"
+                    },
+                    "rentang_usia": {
+                      "type": "integer",
+                      "format": "int32",
+                      "example": 2032
+                    },
+                    "kategori_id[0]": {
+                      "type": "integer",
+                      "format": "int32",
+                      "example": 1
+                    },
+                    "link": {
+                      "type": "string",
+                      "example": "https://forms.gle/ux6f2CpKdPtr4H5U9"
+                    },
+                    "image": {
+                      "type": "string",
+                      "format": "binary"
+                    },
+                    "kategori_id[1]": {
+                      "type": "integer",
+                      "format": "int32",
+                      "example": 2
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "",
+              "headers": {},
+              "content": {}
+            }
+          },
+          "deprecated": false,
+          "security": [
+            {
+              "bearer": []
+            }
+          ]
+        },
+        "get": {
+          "tags": [
+            "Kuesioners"
+          ],
+          "summary": "getallkuesionerdata",
+          "description": "get all kuesioner data",
+          "operationId": "getallkuesionerdata",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "",
+              "headers": {},
+              "content": {}
+            }
+          },
+          "deprecated": false
+        }
+      },
+      "/kuesioners/13/answer": {
+        "post": {
+          "tags": [
+            "Kuesioners"
+          ],
+          "summary": "usermenjawabkuesioner",
+          "description": "user menjawab kuesioner",
+          "operationId": "usermenjawabkuesioner",
+          "parameters": [],
+          "requestBody": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/usermenjawabkuesionerrequest"
+                    },
+                    {
+                      "example": {
+                        "answers": [
+                          "Answer 1"
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "example": {
+                  "answers": [
+                    "Answer 1"
+                  ]
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "",
+              "headers": {},
+              "content": {}
+            }
+          },
+          "deprecated": false,
+          "security": [
+            {
+              "bearer": []
+            }
+          ]
+        }
+      },
+      "/kuesioners/details/13": {
+        "get": {
+          "tags": [
+            "Kuesioners"
+          ],
+          "summary": "getspecifickuesionerdata",
+          "description": "get specific kuesioner data",
+          "operationId": "getspecifickuesionerdata",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "",
+              "headers": {},
+              "content": {}
+            }
+          },
+          "deprecated": false
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "updateuserprofilerequest": {
+          "title": "updateuserprofilerequest",
+          "required": [
+            "nama",
+            "umur",
+            "pekerjaan"
+          ],
+          "type": "object",
+          "properties": {
+            "nama": {
+              "type": "string"
+            },
+            "umur": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "pekerjaan": {
+              "type": "string"
+            }
+          },
+          "example": {
+            "nama": "a Doe",
+            "umur": 30,
+            "pekerjaan": "Software Engineer"
+          }
+        },
+        "registeraccountrequest": {
+          "title": "registeraccountrequest",
+          "required": [
+            "nama",
+            "umur",
+            "gender",
+            "phone",
+            "email",
+            "password",
+            "confirm_password"
+          ],
+          "type": "object",
+          "properties": {
+            "nama": {
+              "type": "string"
+            },
+            "umur": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "gender": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            },
+            "confirm_password": {
+              "type": "string"
+            }
+          },
+          "example": {
+            "nama": "John Doe",
+            "umur": 25,
+            "gender": "laki-laki",
+            "phone": "23454421",
+            "email": "jni2@example.com",
+            "password": "password123",
+            "confirm_password": "password123"
+          }
+        },
+        "loginuserrequest": {
+          "title": "loginuserrequest",
+          "required": [
+            "email",
+            "password"
+          ],
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            }
+          },
+          "example": {
+            "email": "jni2@example.com",
+            "password": "password123"
+          }
+        },
+        "usermenjawabkuesionerrequest": {
+          "title": "usermenjawabkuesionerrequest",
+          "required": [
+            "answers"
+          ],
+          "type": "object",
+          "properties": {
+            "answers": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": ""
+            }
+          },
+          "example": {
+            "answers": [
+              "Answer 1"
+            ]
+          }
+        },
+        "createnewcategoryrequest": {
+          "title": "createnewcategoryrequest",
+          "required": [
+            "kategori_nama",
+            "kategori_desc"
+          ],
+          "type": "object",
+          "properties": {
+            "kategori_nama": {
+              "type": "string"
+            },
+            "kategori_desc": {
+              "type": "string"
+            }
+          },
+          "example": {
+            "kategori_nama": "Category",
+            "kategori_desc": "Description"
+          }
+        }
+      },
+      "securitySchemes": {
+        "bearer": {
+          "type": "http",
+          "scheme": "bearer"
+        }
+      }
+    },
+    "security": [],
+    "tags": [
+      {
+        "name": "Protected"
+      },
+      {
+        "name": "Auth"
+      },
+      {
+        "name": "Kategori"
+      },
+      {
+        "name": "Kuesioners"
+      },
+      {
+        "name": "testing"
+      }
+    ]
+  }
