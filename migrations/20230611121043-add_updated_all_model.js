@@ -115,7 +115,7 @@ module.exports = {
         primaryKey: true,
       },
       judul: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       deskripsi: {
@@ -123,7 +123,7 @@ module.exports = {
         allowNull: false,
       },
       rentang_usia: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       kategori_id: {
