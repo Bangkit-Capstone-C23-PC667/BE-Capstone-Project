@@ -365,6 +365,11 @@ exports.showUserOwnKuesioner = async (req, res) => {
   }
 
   const kuesioner = await Kuesioner.findAll({ where: { user_Id: userId } });
+
+  if (kuesioner.length === 0) {
+    return res.status(404).json({ message: 'User has no kuesioner' });
+  }
+  
   const response = {
     status: "success",
     message: "berhasil menampilkan kuesioner miliki user",
