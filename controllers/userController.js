@@ -354,3 +354,25 @@ exports.showKuesionerHistory = async (req, res) => {
   }
 };
 
+exports.showUserOwnKuesioner = async (req, res) => {
+  try {
+  const userId = req.user.userId;
+
+  const user = await User.findOne({ where: { user_id: userId } });
+
+  if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+  }
+
+  const kuesioner = await Kuesioner.findAll({ where: { user_Id: userId } });
+  const response = {
+    status: "success",
+    message: "berhasil menampilkan kuesioner miliki user",
+    data: kuesioner
+  }
+  res.json(response);
+  } catch (error) {
+      console.error('Error fetching kuesioner:', error);
+      res.status(500).json({ message: 'Failed to fetch kuesioner' });
+  }
+};
