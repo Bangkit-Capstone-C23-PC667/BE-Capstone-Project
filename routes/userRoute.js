@@ -29,13 +29,19 @@ router.delete('/delete', authMiddleware, userController.deleteUser);
 router.post('/logout', authMiddleware, userController.logout);
 
 
-//still broken
+//uopdate profile
 router.post('/profile/picture', authMiddleware, upload.single('profilePicture'), userController.updateProfilePicture);
 
-
+// menampilkan  history kuesioner yang telah disi  user
 router.get('/profile/history', authMiddleware, userController.showKuesionerHistory);
 
+// menampilkan  history jawaban user
 router.get('/kuesioner/:kuesionerId/answers', authMiddleware, kuesionerController.showUserAnswers);
+
+// menampilkan  history kuesioner user
+router.get('/profile/kuesioner', authMiddleware, userController.showUserOwnKuesioner);
+
+
 
 
 module.exports = router;
