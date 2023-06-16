@@ -3,18 +3,14 @@
     "info": {
       "title": "Backend-capstone",
       "contact": {},
-      "version": "1.2"
+      "version": "1.3"
     },
     "servers": [
-      {
-        "url": "https://virtserver.swaggerhub.com/Fayed06/quisiin/1.2",
-        "description": "SwaggerHub API Auto Mocking",
-        "variables": {}
-      },
-      {
-        "url": "https://be-capstone-project-aethyk4pbq-et.a.run.app",
-        "variables": {}
-      }
+        {
+          "url": "https://be-capstone-project-aethyk4pbq-et.a.run.app",
+          "description": "Backend API Server cpastone Quisiin",
+          "variables": {}
+        }
     ],
     "paths": {
       "/users/profile": {
@@ -22,15 +18,13 @@
           "tags": [
             "Protected"
           ],
-          "summary": "getuserprofile",
-          "description": "get user profile",
+          "summary": "get user profile",
           "operationId": "getuserprofile",
           "parameters": [],
           "responses": {
             "200": {
               "description": "",
-              "headers": {},
-              "content": {}
+              "headers": {}
             }
           },
           "deprecated": false,
@@ -46,15 +40,35 @@
           "tags": [
             "Protected"
           ],
-          "summary": "getuserkuesionerhistory",
-          "description": "get user kuesioner history",
+          "summary": "get user kuesioner history",
           "operationId": "getuserkuesionerhistory",
           "parameters": [],
           "responses": {
             "200": {
               "description": "",
-              "headers": {},
-              "content": {}
+              "headers": {}
+            }
+          },
+          "deprecated": false,
+          "security": [
+            {
+              "bearer": []
+            }
+          ]
+        }
+      },
+      "/users/profile/kuesioner": {
+        "get": {
+          "tags": [
+            "Protected"
+          ],
+          "summary": "get user own kuesioners",
+          "operationId": "getuserownkuesioners",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "",
+              "headers": {}
             }
           },
           "deprecated": false,
@@ -70,15 +84,13 @@
           "tags": [
             "Protected"
           ],
-          "summary": "getuserkuesionerhistoryCopy",
-          "description": "get user kuesioner history Copy",
+          "summary": "get user kuesioner history Copy",
           "operationId": "getuserkuesionerhistoryCopy",
           "parameters": [],
           "responses": {
             "200": {
               "description": "",
-              "headers": {},
-              "content": {}
+              "headers": {}
             }
           },
           "deprecated": false,
@@ -94,15 +106,13 @@
           "tags": [
             "Protected"
           ],
-          "summary": "deleteuser",
-          "description": "delete user",
+          "summary": "delete user",
           "operationId": "deleteuser",
           "parameters": [],
           "responses": {
             "200": {
               "description": "",
-              "headers": {},
-              "content": {}
+              "headers": {}
             }
           },
           "deprecated": false,
@@ -118,8 +128,7 @@
           "tags": [
             "Protected"
           ],
-          "summary": "updateuserprofile",
-          "description": "update user profile",
+          "summary": "update user profile",
           "operationId": "updateuserprofile",
           "parameters": [],
           "requestBody": {
@@ -152,8 +161,7 @@
           "responses": {
             "200": {
               "description": "",
-              "headers": {},
-              "content": {}
+              "headers": {}
             }
           },
           "deprecated": false,
@@ -169,8 +177,7 @@
           "tags": [
             "Protected"
           ],
-          "summary": "updateuserprofilepicture",
-          "description": "update user profile picture",
+          "summary": "update user profile picture",
           "operationId": "updateuserprofilepicture",
           "parameters": [],
           "requestBody": {
@@ -196,8 +203,7 @@
           "responses": {
             "200": {
               "description": "",
-              "headers": {},
-              "content": {}
+              "headers": {}
             }
           },
           "deprecated": false,
@@ -214,14 +220,12 @@
             "Protected"
           ],
           "summary": "logout",
-          "description": "logout",
           "operationId": "logout",
           "parameters": [],
           "responses": {
             "200": {
               "description": "",
-              "headers": {},
-              "content": {}
+              "headers": {}
             }
           },
           "deprecated": false,
@@ -237,8 +241,7 @@
           "tags": [
             "Auth"
           ],
-          "summary": "registeraccount",
-          "description": "register account",
+          "summary": "register account",
           "operationId": "registeraccount",
           "parameters": [],
           "requestBody": {
@@ -279,8 +282,7 @@
           "responses": {
             "200": {
               "description": "",
-              "headers": {},
-              "content": {}
+              "headers": {}
             }
           },
           "deprecated": false
@@ -291,8 +293,7 @@
           "tags": [
             "Auth"
           ],
-          "summary": "loginuser",
-          "description": "login user",
+          "summary": "login user",
           "operationId": "loginuser",
           "parameters": [],
           "requestBody": {
@@ -323,27 +324,42 @@
           "responses": {
             "200": {
               "description": "",
-              "headers": {},
-              "content": {}
+              "headers": {}
             }
           },
           "deprecated": false
         }
       },
+      "/kategoris": {
+        "get": {
+          "tags": [
+            "Kategori"
+          ],
+          "summary": "get all kategori",
+          "operationId": "getallkategori",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "",
+              "headers": {}
+            }
+          },
+          "deprecated": false
+        }
+
+    },
       "/kategoris/1": {
         "get": {
           "tags": [
             "Kategori"
           ],
-          "summary": "getspecifickategori",
-          "description": "get specific kategori",
+          "summary": "get specific kategori",
           "operationId": "getspecifickategori",
           "parameters": [],
           "responses": {
             "200": {
               "description": "",
-              "headers": {},
-              "content": {}
+              "headers": {}
             }
           },
           "deprecated": false
@@ -354,8 +370,7 @@
           "tags": [
             "Kuesioners"
           ],
-          "summary": "createnewkuesioners",
-          "description": "create new kuesioners",
+          "summary": "create new kuesioners",
           "operationId": "createnewkuesioners",
           "parameters": [],
           "requestBody": {
@@ -367,9 +382,10 @@
                     "judul",
                     "deskripsi",
                     "rentang_usia",
-                    "kategori_id",
+                    "kategori_id[0]",
                     "link",
-                    "image"
+                    "image",
+                    "kategori_id[1]"
                   ],
                   "type": "object",
                   "properties": {
@@ -386,7 +402,7 @@
                       "format": "int32",
                       "example": 2032
                     },
-                    "kategori_id": {
+                    "kategori_id[0]": {
                       "type": "integer",
                       "format": "int32",
                       "example": 1
@@ -398,6 +414,11 @@
                     "image": {
                       "type": "string",
                       "format": "binary"
+                    },
+                    "kategori_id[1]": {
+                      "type": "integer",
+                      "format": "int32",
+                      "example": 2
                     }
                   }
                 }
@@ -408,8 +429,7 @@
           "responses": {
             "200": {
               "description": "",
-              "headers": {},
-              "content": {}
+              "headers": {}
             }
           },
           "deprecated": false,
@@ -423,15 +443,13 @@
           "tags": [
             "Kuesioners"
           ],
-          "summary": "getallkuesionerdata",
-          "description": "get all kuesioner data",
+          "summary": "get all kuesioner data",
           "operationId": "getallkuesionerdata",
           "parameters": [],
           "responses": {
             "200": {
               "description": "",
-              "headers": {},
-              "content": {}
+              "headers": {}
             }
           },
           "deprecated": false
@@ -442,8 +460,7 @@
           "tags": [
             "Kuesioners"
           ],
-          "summary": "usermenjawabkuesioner",
-          "description": "user menjawab kuesioner",
+          "summary": "user menjawab kuesioner",
           "operationId": "usermenjawabkuesioner",
           "parameters": [],
           "requestBody": {
@@ -476,8 +493,7 @@
           "responses": {
             "200": {
               "description": "",
-              "headers": {},
-              "content": {}
+              "headers": {}
             }
           },
           "deprecated": false,
@@ -493,15 +509,13 @@
           "tags": [
             "Kuesioners"
           ],
-          "summary": "getspecifickuesionerdata",
-          "description": "get specific kuesioner data",
+          "summary": "get specific kuesioner data",
           "operationId": "getspecifickuesionerdata",
           "parameters": [],
           "responses": {
             "200": {
               "description": "",
-              "headers": {},
-              "content": {}
+              "headers": {}
             }
           },
           "deprecated": false
