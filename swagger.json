@@ -367,10 +367,9 @@
                     "judul",
                     "deskripsi",
                     "rentang_usia",
-                    "kategori_id[0]",
+                    "kategori_id",
                     "link",
-                    "image",
-                    "kategori_id[1]"
+                    "image"
                   ],
                   "type": "object",
                   "properties": {
@@ -387,7 +386,7 @@
                       "format": "int32",
                       "example": 2032
                     },
-                    "kategori_id[0]": {
+                    "kategori_id": {
                       "type": "integer",
                       "format": "int32",
                       "example": 1
@@ -399,11 +398,6 @@
                     "image": {
                       "type": "string",
                       "format": "binary"
-                    },
-                    "kategori_id[1]": {
-                      "type": "integer",
-                      "format": "int32",
-                      "example": 2
                     }
                   }
                 }
